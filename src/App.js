@@ -6,9 +6,10 @@ import mergeSort from './Algorithms/MergeSort.js'
 
 const MIN = 5;
 const MAX = 500;
-const numOfBars = 100;
-const DEFAULT_COLOR = 'cyan';
-const SORTING_COLOR = 'red';
+const numOfBars = 10;
+const DEFAULT_COLOR = "turquoise";
+const SORTING_COLOR = "red";
+var TIMEOUT = 100;
 
 export default class App extends React.Component {
   constructor(props) {
@@ -16,44 +17,73 @@ export default class App extends React.Component {
     this.state = {
       array: [],
     }
-    this.initArray();
+    this.init();
   }
-  initArray() {
+  init() {
     for(let i=0;i<numOfBars;i++) {
-      this.state.array.push(this.genRandomNo());
+      this.state.array.push(this.createBar(this.genRandomNo(),i));
     }
+    TIMEOUT = 100;
   }
+  createBar(val,idx) {
+    const bar = {
+        height: val,
+        index: idx,
+        isBeingSorted: false
+    };
+    return bar;
+  } 
   genRandomNo() {
      return MIN + Math.random() * (MAX-MIN+1);
   }
   renderArray() {
-    return (
-     this.state.array.map((num,idx)=>{
-       return (
-       <Bar
-        value={num}
-        index={idx}
-       >
-       </Bar>
-       );
-     })
-    );
+    return this.state.array.map((bar) => {
+      const {height,index} = bar;
+        return (
+          <Bar
+          id={index}
+          height={height}
+          index={index}>
+          </Bar>
+        );
+    })
   }
   visualiseMergeSort() {
-     const animations = [];
-     mergeSort(animations,this.state.array.slice());
-     for(let i=0;i<animations.length;i++) {
-       const [x,y] = animations[i];
-       var isComparingOrIsSorting = i % 3 === 0;
-       if(isComparingOrIsSorting) {
-         setTimeout(()=>document.getElementById(x).style.backgroundColor = SORTING_COLOR,10*i); 
-         setTimeout(()=>document.getElementById(y).style.backgroundColor = SORTING_COLOR,10*i); 
-       }
-       else {
-        setTimeout(()=>document.getElementById(x).style.backgroundColor = DEFAULT_COLOR,10*i); 
-        setTimeout(()=>document.getElementById(x).style.backgroundColor = DEFAULT_COLOR,10*i); 
-       }
-     }
+    const visited = mergeSort(this.state.array.slice());
+    TIMEOUT = 0;
+    for(let i=0;i<visited.length;i++) {
+      if(visited[i].length === 2) {
+        this.markComparing(visited[i][0],visited[i][1]);
+        this.markReturnToDefault(visited[i][0],visited[i][1]);
+      }
+      else {
+        this.markComparing(visited[i][0],visited[i][1]);
+        this.markSwapping(visited[i][0],visited[i][1]);
+        this.markReturnToDefault(visited[i][0],visited[i][1]);
+      }
+    }
+  }
+  markReturnToDefault(x,y) {
+    setTimeout(()=> {
+      document.getElementById(x).style.backgroundColor = DEFAULT_COLOR;
+      document.getElementById(y).style.backgroundColor = DEFAULT_COLOR;
+    },TIMEOUT);
+    TIMEOUT += 100;
+  }
+  markComparing(x,y) {
+   setTimeout(()=> {
+     document.getElementById(x).style.backgroundColor = SORTING_COLOR;
+     document.getElementById(y).style.backgroundColor = SORTING_COLOR;
+   },TIMEOUT);
+   TIMEOUT += 100;
+  }
+  markSwapping(x,y) {
+    setTimeout(()=> {
+      let tmp = document.getElementById(x).style.height;
+      document.getElementById(x).style.height = document.getElementById(y).style.height;
+      document.getElementById(y).style.height = tmp;
+    },TIMEOUT);
+    TIMEOUT += 100;
   }
    render() {
      return (
