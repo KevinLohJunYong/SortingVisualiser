@@ -6,10 +6,11 @@ import mergeSort from './Algorithms/MergeSort.js'
 
 const MIN = 5;
 const MAX = 500;
-const numOfBars = 10;
+const numOfBars = 40;
 const DEFAULT_COLOR = "turquoise";
 const SORTING_COLOR = "red";
-var TIMEOUT = 100;
+var TIMEOUT = 20;
+var TIME_OUT_INTERVAL = 20;
 
 export default class App extends React.Component {
   constructor(props) {
@@ -52,15 +53,9 @@ export default class App extends React.Component {
     const visited = mergeSort(this.state.array.slice());
     TIMEOUT = 0;
     for(let i=0;i<visited.length;i++) {
-      if(visited[i].length === 2) {
         this.markComparing(visited[i][0],visited[i][1]);
+        this.markSwapping(visited[i][2],visited[i][3]);
         this.markReturnToDefault(visited[i][0],visited[i][1]);
-      }
-      else {
-        this.markComparing(visited[i][0],visited[i][1]);
-        this.markSwapping(visited[i][0],visited[i][1]);
-        this.markReturnToDefault(visited[i][0],visited[i][1]);
-      }
     }
   }
   markReturnToDefault(x,y) {
@@ -68,28 +63,30 @@ export default class App extends React.Component {
       document.getElementById(x).style.backgroundColor = DEFAULT_COLOR;
       document.getElementById(y).style.backgroundColor = DEFAULT_COLOR;
     },TIMEOUT);
-    TIMEOUT += 100;
+    TIMEOUT += TIME_OUT_INTERVAL;
   }
   markComparing(x,y) {
    setTimeout(()=> {
      document.getElementById(x).style.backgroundColor = SORTING_COLOR;
      document.getElementById(y).style.backgroundColor = SORTING_COLOR;
    },TIMEOUT);
-   TIMEOUT += 100;
+   TIMEOUT += TIME_OUT_INTERVAL;
   }
   markSwapping(x,y) {
     setTimeout(()=> {
-      let tmp = document.getElementById(x).style.height;
-      document.getElementById(x).style.height = document.getElementById(y).style.height;
-      document.getElementById(y).style.height = tmp;
+      document.getElementById(x).style.height = `${y}px`;
     },TIMEOUT);
-    TIMEOUT += 100;
+    TIMEOUT += TIME_OUT_INTERVAL;
+  }
+  randomlyGenerateArray() {
+    window.location.reload();
   }
    render() {
      return (
          <div style={{textAlign:"center"}}>
            <div>
            <Button onClick={()=>this.visualiseMergeSort()}> Merge Sort </Button>
+           <Button onClick={()=>this.randomlyGenerateArray()}> Randomly Generate Array </Button>
            </div>
             {this.renderArray()}
          </div>

@@ -1,11 +1,10 @@
-const NUM_OF_BARS = 10;
+const NUM_OF_BARS = 40;
 var res = [];
 var board = [];
 export default function mergeSort(_board) {
     res = [];
     board = _board.slice();
     mergeSortHelper(0,NUM_OF_BARS-1);
-    print();
     return res;
 }
 function mergeSortHelper(l,r) {
@@ -15,30 +14,34 @@ function mergeSortHelper(l,r) {
    mergeSortHelper(mid+1,r);
    merge(l,mid,r);
 }
-function print() {
-    var _res = [];
-    for(let i=0;i<board.length;i++) {
-        _res.push(board[i].height);
-    }
-    alert(_res);
-}
 function merge(l,mid,r) {
-    var p1 = l;
-    var p2 = mid+1;
-    while(p1 <= mid && p2 <= r) {
-      if(board[p1].height > board[p2].height) {
-          res.push([p1,p2,true]);
-          swap(p1,p2);
+   const newArray = [];
+   let p1 = l;
+   let p2 = mid+1;
+   let k = 0;
+   while(p1 <= mid && p2 <= r) {
+       if(board[p1].height > board[p2].height) {
+          newArray.push(board[p2].height);
+          res.push([p1,p2,l+k,board[p2].height]);
           p2++;
-      }
-      else {
-          res.push([p1,p2]);
+       }
+       else {
+          newArray.push(board[p1].height);
+          res.push([p1,p2,l+k,board[p1].height]);
           p1++;
-      }
-    }
+       }
+       k++;
+   }
+   for(;p1 <= mid;p1++,k++) {
+       res.push([p1,p1,l+k,board[p1].height]);
+       newArray.push(board[p1].height);
+   }
+   for(;p2 <= r;p2++,k++) {
+     res.push([p2,p2,l+k,board[p2].height]);
+     newArray.push(board[p2].height);
+   }
+   for(let i=l;i<=r;i++) {
+       board[i].height = newArray[i-l];
+   }
 }
-function swap(p1,p2) {
-    let tmp = board[p1];
-    board[p1] = board[p2];
-    board[p2] = tmp;
-}
+
