@@ -15,6 +15,11 @@ export default function bubbleSort(arr) {
         }
         animations.push(["sorted",arr.length-1-sorted]);
     }
+    if(!needToSwap) {
+        for(let i=arr.length-sorted-1;i >= 0;i--) {
+            animations.push(["sorted",i]);
+        }
+    }
     return animations;
 }
 function swap(x,y,arr) {
