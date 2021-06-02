@@ -39,7 +39,9 @@ export default class App extends React.Component {
     for(let i=0;i<numOfBars;i++) {
       this.state.array.push(this.createBar(this.genRandomNo(),i));
     }
-    TIMEOUT = 100;
+    if(window.screen.availWidth < 500) {
+      alert('Hi there, your screen size is a bit small. U can rotate your phone horizontally or better still use a laptop for a better consumer experience! :)')
+    }
   }
   createBar(val,idx) {
     const bar = {

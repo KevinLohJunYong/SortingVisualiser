@@ -1,6 +1,6 @@
 import React from 'react';
 
-const widthAdjusted = window.screen.availWidth < 500 ? "20px" : "30px";
+const widthAdjusted = window.screen.availWidth < 500 ? "25px" : "30px";
 
 export default class Bar extends React.Component {
      getBgColor(isBeingSorted) {
