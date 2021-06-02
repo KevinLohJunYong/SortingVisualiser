@@ -40,7 +40,7 @@ export default class App extends React.Component {
       this.state.array.push(this.createBar(this.genRandomNo(),i));
     }
     if(window.screen.availWidth < 500) {
-      alert('Hi there, your screen size is a bit small. U can rotate your phone horizontally or better still use a laptop for a better consumer experience! :)')
+      alert('Hi there, your screen size is a bit small. You can consider rotating your phone horizontally or better still, use a laptop for a better consumer experience! Enjoy! :)')
     }
   }
   createBar(val,idx) {
