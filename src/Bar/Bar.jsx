@@ -1,6 +1,6 @@
 import React from 'react';
 
-const widthAdjusted = window.screen.availWidth < 800 ? "25px" : "30px";
+const widthAdjusted = window.screen.availWidth < 1000 ? "25px" : "30px";
 
 export default class Bar extends React.Component {
      getBgColor(isBeingSorted) {
@@ -8,7 +8,7 @@ export default class Bar extends React.Component {
         return "turquoise";
      }
      adjustHeight(height) {
-       if(window.screen.availWidth < 800) return height/2;
+       if(window.screen.availWidth < 1000) return height/2;
        return height;
      }
      render() {

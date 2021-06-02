@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 
 const MIN = 5;
 const MAX = 500;
-const numOfBars = window.screen.availWidth < 800 ? 20 : 40;
+const numOfBars = window.screen.availWidth < 1000 ? 20 : 40;
 const DEFAULT_COLOR = "turquoise";
 const SORTING_COLOR = "red";
 var TIMEOUT = 0;
@@ -41,9 +41,6 @@ export default class App extends React.Component {
     }
     if(window.screen.availWidth < 500) {
       alert('Hi there, your screen size is a bit small. U can rotate your phone horizontally or better still use a laptop for a better consumer experience! :)')
-    }
-    else {
-      alert(window.screen.availWidth);
     }
   }
   createBar(val,idx) {
