@@ -3,8 +3,16 @@ var board = [];
 export default function mergeSort(_board) {
     res = [];
     board = _board.slice();
+    adjustHeightBoard();
     mergeSortHelper(0,board.length-1);
     return res;
+}
+function adjustHeightBoard() {
+    var isSmallScreen = window.screen.availWidth < 1000;
+    if(!isSmallScreen) return;
+    for(let i=0;i<board.length;i++) {
+         board[i].height = board[i].height/2;
+    }
 }
 function mergeSortHelper(l,r) {
    if(l >= r) return;
