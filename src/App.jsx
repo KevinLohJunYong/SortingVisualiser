@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 
 const MIN = 5;
 const MAX = 500;
-const numOfBars = window.screen.availWidth < 500 ? 20 : 40;
+const numOfBars = window.screen.availWidth < 700 ? 20 : 40;
 const DEFAULT_COLOR = "turquoise";
 const SORTING_COLOR = "red";
 var TIMEOUT = 0;

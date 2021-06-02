@@ -1,6 +1,6 @@
 import React from 'react';
 
-const widthAdjusted = window.screen.availWidth < 500 ? "25px" : "30px";
+const widthAdjusted = window.screen.availWidth < 700 ? "25px" : "30px";
 
 export default class Bar extends React.Component {
      getBgColor(isBeingSorted) {
@@ -8,7 +8,7 @@ export default class Bar extends React.Component {
         return "turquoise";
      }
      adjustHeight(height) {
-       if(window.screen.availWidth < 500) return height/2;
+       if(window.screen.availWidth < 700) return height/2;
        return height;
      }
      render() {
@@ -20,7 +20,7 @@ export default class Bar extends React.Component {
          return (
             <div 
               id={index}
-              style={{height:`${this.adjustHeight(height)}px`,width:widthAdjusted,backgroundColor:this.getBgColor(isBeingSorted),display:"inline-block",margin:"1px",marginTop:"10%"}}>
+              style={{height:`${this.adjustHeight(height)}px`,width:widthAdjusted,backgroundColor:this.getBgColor(isBeingSorted),display:"inline-block",margin:"1px",marginTop:"7%"}}>
             </div>
          );
      };
