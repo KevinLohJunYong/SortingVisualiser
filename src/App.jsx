@@ -1,10 +1,17 @@
 import './App.css';
+import { withStyles } from "@material-ui/core/styles";
+import './index.css';
 import React, {Component} from 'react';
 import Bar from './Bar/Bar.jsx';
 import Button from '@material-ui/core/Button';
 import mergeSort from './Algorithms/MergeSort.js';
 import quickSort from './Algorithms/QuickSort.js';
 import bubbleSort from './Algorithms/BubbleSort.js';
+import insertionSort from './Algorithms/InsertionSort.js';
+import selectionSort from './Algorithms/SelectionSort.js';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 const MIN = 5;
 const MAX = 500;
@@ -12,7 +19,13 @@ const numOfBars = 40;
 const DEFAULT_COLOR = "turquoise";
 const SORTING_COLOR = "red";
 var TIMEOUT = 0;
-var TIME_OUT_INTERVAL = 20;
+var TIME_OUT_INTERVAL = 50;
+
+const WhiteTextTypography = withStyles({
+  root: {
+    color: "#FFFFFF"
+  }
+})(Typography);
 
 export default class App extends React.Component {
   constructor(props) {
@@ -54,6 +67,7 @@ export default class App extends React.Component {
   visualiseMergeSort() {
     const visited = mergeSort(this.state.array.slice());
     TIMEOUT = 0;
+    TIME_OUT_INTERVAL = 30;
     for(let i=0;i<visited.length;i++) {
         this.markComparing(visited[i][0],visited[i][1]);
         this.markSwapping(visited[i][2],visited[i][3]);
@@ -206,17 +220,127 @@ export default class App extends React.Component {
       }
     }
   }
+  visualiseInsertionSort() {
+    const animations = insertionSort(this.state.array.slice());
+    for(let i=0;i<animations.length;i++) {
+      const arr = animations[i];
+      const operator = arr[0];
+      if(operator === "visit") {
+        this.markVisit(arr[1],arr[2]);
+      }
+      else {
+        this.markSwap(arr[1],arr[2]);
+      }
+    }
+  }
+  markSmallest(x,y) {
+    setTimeout(() => {
+       document.getElementById(x).style.backgroundColor = "blue";
+       document.getElementById(y).style.backgroundColor = DEFAULT_COLOR;
+    },TIMEOUT);
+    TIMEOUT += TIME_OUT_INTERVAL;
+  }
+  visualiseSelectionSort() {
+    const animations = selectionSort(this.state.array.slice());
+    for(let i=0;i<animations.length;i++) {
+      const arr = animations[i];
+      const operator = arr[0];
+      if(operator === "pivot") {
+        this.markPivot(arr[1]);
+      }
+      else if(operator === "swap") {
+        this.markSwap(arr[1],arr[2]);
+      }
+      else if(operator === "visit") {
+        this.markVisit(arr[1],arr[1]);
+      }
+      else if(operator === "sorted") {
+        this.markSorted(arr[1]);
+      }
+      else {
+        this.markSmallest(arr[1],arr[2]);
+      }
+    }
+  }
+  animateButton(id) {
+    document.getElementById(id).style.backgroundColor = "orange";
+ }
+ deAnimateButton(id) {
+     document.getElementById(id).style.backgroundColor = "inherit";
+  }
    render() {
      return (
-         <div style={{textAlign:"center"}}>
+       <div style={{textAlign:"center"}}>
+      <AppBar position="static" elevation={0} style={{padding:"10px",paddingLeft:"5px"}}>
+      <Toolbar>
+        <Typography variant="h6" color="inherit">
+            SortingVisualiser
+        </Typography>
+        <div class="dropdown">
+          <Button 
+            id="visualiseButton" 
+            size="large"
+            onMouseEnter={()=>this.animateButton("visualiseButton")} 
+            onMouseLeave={()=>this.deAnimateButton("visualiseButton")}
+            variant="outlined" 
+            style={{textTransform:"none"}}> 
+             <WhiteTextTypography variant="h6" color="#FFFFFF">
+                Visualise Algorithms
+             </WhiteTextTypography>
+          </Button>
+          <div class="dropdown-content">
+           <Button 
+                   id="bubbleSortButton"
+                   size="large"
+                   style={{backgroundColor:"white",textTransform:"none"}} 
+                   onClick={()=>this.visualiseBubbleSort()}
+                   onMouseEnter={()=>this.animateButton("bubbleSortButton")}
+                   onMouseLeave={()=>this.deAnimateButton("bubbleSortButton")}> Bubble Sort </Button>
+           <Button 
+                   id="insertionSortButton"
+                   style={{backgroundColor:"white",textTransform:"none"}}
+                   onClick={()=>this.visualiseInsertionSort()}
+                   onMouseEnter={()=>this.animateButton("insertionSortButton")}
+                   onMouseLeave={()=>this.deAnimateButton("insertionSortButton")}> Insertion Sort </Button>
+          <Button 
+                  id="selectionSortButton"
+                  size="large"
+                  style={{backgroundColor:"white",textTransform:"none"}}
+                  onClick={()=>this.visualiseSelectionSort()} 
+                  onMouseEnter={()=>this.animateButton("selectionSortButton")}
+                  onMouseLeave={()=>this.deAnimateButton("selectionSortButton")}> Selection Sort </Button>
+        <Button 
+                  id="mergeSortButton"
+                  style={{backgroundColor:"white",textTransform:"none"}}
+                  onClick={()=>this.visualiseMergeSort()}
+                  onMouseEnter={()=>this.animateButton("mergeSortButton")}
+                  onMouseLeave={()=>this.deAnimateButton("mergeSortButton")}> Merge Sort </Button>
+           <Button 
+                  id="quickSortButton"
+                  size="large"
+                  style={{backgroundColor:"white",textTransform:"none"}}
+                  onClick={()=>this.visualiseQuickSort()} 
+                  onMouseEnter={()=>this.animateButton("quickSortButton")}
+                  onMouseLeave={()=>this.deAnimateButton("quickSortButton")}> Quick Sort </Button>
+        </div>
+          </div>
+          <Button
+              id="genArrayButton"
+              size="large"
+              style={{textTransform:"none"}}
+              onClick={() => window.location.reload()}
+              onMouseEnter={()=>this.animateButton("genArrayButton")}
+              onMouseLeave={()=>this.deAnimateButton("genArrayButton")}>
+             <WhiteTextTypography variant="h6" color="#FFFFFF">
+                Generate A Random Array
+             </WhiteTextTypography>
+          </Button>
+      </Toolbar>
+    </AppBar>
            <div>
-           <Button onClick={()=>this.randomlyGenerateArray()}> Randomly Generate Array </Button>
-           <Button onClick={()=>this.visualiseMergeSort()}> Merge Sort </Button>
-           <Button onClick={()=>this.visualiseQuickSort()}> Quick Sort </Button>
-           <Button onClick={()=>this.visualiseBubbleSort()}> Bubble Sort </Button>
-           </div>
             {this.renderArray()}
-         </div>
+            </div>
+            </div>
      );
    }
 }
