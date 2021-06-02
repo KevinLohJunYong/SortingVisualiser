@@ -42,6 +42,9 @@ export default class App extends React.Component {
     if(window.screen.availWidth < 500) {
       alert('Hi there, your screen size is a bit small. U can rotate your phone horizontally or better still use a laptop for a better consumer experience! :)')
     }
+    else {
+      alert(window.screen.availWidth);
+    }
   }
   createBar(val,idx) {
     const bar = {
