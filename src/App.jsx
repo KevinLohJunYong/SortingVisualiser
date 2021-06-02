@@ -1,7 +1,7 @@
 import './App.css';
 import { withStyles } from "@material-ui/core/styles";
 import './index.css';
-import React, {Component} from 'react';
+import React from 'react';
 import Bar from './Bar/Bar.jsx';
 import Button from '@material-ui/core/Button';
 import mergeSort from './Algorithms/MergeSort.js';
