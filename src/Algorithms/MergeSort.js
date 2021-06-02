@@ -1,10 +1,9 @@
-const NUM_OF_BARS = 40;
 var res = [];
 var board = [];
 export default function mergeSort(_board) {
     res = [];
     board = _board.slice();
-    mergeSortHelper(0,NUM_OF_BARS-1);
+    mergeSortHelper(0,board.length-1);
     return res;
 }
 function mergeSortHelper(l,r) {
