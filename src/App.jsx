@@ -197,14 +197,9 @@ export default class App extends React.Component {
       document.getElementById(y).style.backgroundColor = DEFAULT_COLOR;
     },TIMEOUT);
   }
-  markSorted(x) {
-    setTimeout(() => {
-      document.getElementById(x).style.backgroundColor = "teal";
-    },TIMEOUT);
-  }
   visualiseBubbleSort() {
     TIMEOUT = 0;
-    TIME_OUT_INTERVAL = 30;
+    TIME_OUT_INTERVAL = 20;
     const animations = bubbleSort(this.state.array.slice());
     for(let i=0;i<animations.length;i++) {
       const arr = animations[i];
