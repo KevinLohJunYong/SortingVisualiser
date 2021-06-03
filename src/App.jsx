@@ -153,8 +153,10 @@ export default class App extends React.Component {
     TIMEOUT += TIME_OUT_INTERVAL;
   }
   visualiseQuickSort() {
+    document.getElementById("visualiseButton").style.pointerEvents = "none";
+    document.getElementById("dropdownId").style.pointerEvents = "none";
     TIMEOUT = 0;
-    TIME_OUT_INTERVAL = 40;
+    TIME_OUT_INTERVAL = 20;
     const animations = quickSort(this.state.array.slice());
     for(let i=0;i<animations.length;i++) {
       const arr = animations[i];
@@ -203,6 +205,8 @@ export default class App extends React.Component {
   visualiseBubbleSort() {
     TIMEOUT = 0;
     TIME_OUT_INTERVAL = 20;
+    document.getElementById("visualiseButton").style.pointerEvents = "none";
+    document.getElementById("dropdownId").style.pointerEvents = "none";
     const animations = bubbleSort(this.state.array.slice());
     for(let i=0;i<animations.length;i++) {
       const arr = animations[i];
@@ -219,6 +223,8 @@ export default class App extends React.Component {
     }
   }
   visualiseCombSort() {
+    document.getElementById("visualiseButton").style.pointerEvents = "none";
+    document.getElementById("dropdownId").style.pointerEvents = "none";
     TIMEOUT = 0;
     TIME_OUT_INTERVAL = 20;
     const animations = combSort(this.state.array.slice());
@@ -235,6 +241,10 @@ export default class App extends React.Component {
     }
   }
   visualiseInsertionSort() {
+    TIMEOUT = 0;
+    TIME_OUT_INTERVAL = 20;
+    document.getElementById("visualiseButton").style.pointerEvents = "none";
+    document.getElementById("dropdownId").style.pointerEvents = "none";
     const animations = insertionSort(this.state.array.slice());
     for(let i=0;i<animations.length;i++) {
       const arr = animations[i];
@@ -255,6 +265,10 @@ export default class App extends React.Component {
     TIMEOUT += TIME_OUT_INTERVAL;
   }
   visualiseSelectionSort() {
+    TIMEOUT = 0;
+    TIME_OUT_INTERVAL = 20;
+    document.getElementById("visualiseButton").style.pointerEvents = "none";
+    document.getElementById("dropdownId").style.pointerEvents = "none";
     const animations = selectionSort(this.state.array.slice());
     for(let i=0;i<animations.length;i++) {
       const arr = animations[i];
@@ -290,14 +304,16 @@ export default class App extends React.Component {
         <Typography variant="h6" color="inherit">
             SortingVisualiser
         </Typography>
-        <div class="dropdown">
+        <div 
+        id="dropdownId"
+        class="dropdown">
           <Button 
             id="visualiseButton" 
             size="large"
             onMouseEnter={()=>this.animateButton("visualiseButton")} 
             onMouseLeave={()=>this.deAnimateButton("visualiseButton")}
             variant="outlined" 
-            style={{textTransform:"none"}}> 
+            style={{textTransform:"none",pointerEvents:"auto"}}> 
              <WhiteTextTypography variant="h6" color="#FFFFFF">
                 Visualise Algorithms
              </WhiteTextTypography>
