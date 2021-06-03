@@ -21,7 +21,7 @@ const numOfBars = window.screen.availWidth < 1000 ? 20 : 40;
 const DEFAULT_COLOR = "turquoise";
 const SORTING_COLOR = "red";
 var TIMEOUT = 0;
-var TIME_OUT_INTERVAL = 20;
+var TIME_OUT_INTERVAL = window.screen.availWidth < 1000 ? 35 : 20;;
 
 const WhiteTextTypography = withStyles({
   root: {
@@ -43,7 +43,7 @@ export default class App extends React.Component {
       this.state.array.push(this.createBar(this.genRandomNo(),i));
     }
     if(window.screen.availWidth < 500) {
-      alert('Hi there, your screen size is a bit small. You can consider rotating your phone horizontally or better still, use a laptop for a better experience! Enjoy! :)')
+      alert('Hi there, your screen size is a bit small. You can consider rotating your phone horizontally, or better still, use a laptop for a better experience! Enjoy! :)')
     }
   }
   createBar(val,idx) {
@@ -71,7 +71,7 @@ export default class App extends React.Component {
   }
   visualiseMergeSort() {
     if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:false});
+    this.setState({algorithmOnGoing:true});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
@@ -79,8 +79,6 @@ export default class App extends React.Component {
       document.getElementById("visualiseButton").style.backgroundColor="teal"
     },100);
     const visited = mergeSort(this.state.array.slice());
-    TIMEOUT = 0;
-    TIME_OUT_INTERVAL = 20;
     for(let i=0;i<visited.length;i++) {
         this.markComparing(visited[i][0],visited[i][1]);
         this.markSwapping(visited[i][2],visited[i][3]);
@@ -181,15 +179,13 @@ export default class App extends React.Component {
   }
   visualiseQuickSort() {
     if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:false});
+    this.setState({algorithmOnGoing:true});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
       document.getElementById("dropdownId").style.pointerEvents="auto"
       document.getElementById("visualiseButton").style.backgroundColor="teal"
     },100);
-    TIMEOUT = 0;
-    TIME_OUT_INTERVAL = 20;
     const animations = quickSort(this.state.array.slice());
     for(let i=0;i<animations.length;i++) {
       const arr = animations[i];
@@ -239,9 +235,7 @@ export default class App extends React.Component {
   }
   visualiseBubbleSort() {
     if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:false});
-    TIMEOUT = 0;
-    TIME_OUT_INTERVAL = 20;
+    this.setState({algorithmOnGoing:true});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
@@ -266,15 +260,13 @@ export default class App extends React.Component {
   }
   visualiseCombSort() {
     if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:false});
+    this.setState({algorithmOnGoing:true});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
       document.getElementById("dropdownId").style.pointerEvents="auto"
       document.getElementById("visualiseButton").style.backgroundColor="teal"
     },100);
-    TIMEOUT = 0;
-    TIME_OUT_INTERVAL = 20;
     const animations = combSort(this.state.array.slice());
     for(let i=0;i<animations.length;i++) {
       let idx1 = animations[i][1];
@@ -291,9 +283,7 @@ export default class App extends React.Component {
   }
   visualiseInsertionSort() {
     if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:false});
-    TIMEOUT = 0;
-    TIME_OUT_INTERVAL = 20;
+    this.setState({algorithmOnGoing:true});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
@@ -322,9 +312,7 @@ export default class App extends React.Component {
   }
   visualiseShellSort() {
     if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:false});
-    TIMEOUT = 0;
-    TIME_OUT_INTERVAL = 20;
+    this.setState({algorithmOnGoing:true});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
@@ -341,9 +329,7 @@ export default class App extends React.Component {
   }
   visualiseSelectionSort() {
     if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:false});
-    TIMEOUT = 0;
-    TIME_OUT_INTERVAL = 20;
+    this.setState({algorithmOnGoing:true});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
