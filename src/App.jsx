@@ -9,6 +9,7 @@ import quickSort from './Algorithms/QuickSort.js';
 import bubbleSort from './Algorithms/BubbleSort.js';
 import insertionSort from './Algorithms/InsertionSort.js';
 import selectionSort from './Algorithms/SelectionSort.js';
+import shellSort from './Algorithms/ShellSort.js';
 import combSort from './Algorithms/CombSort.js';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -20,7 +21,7 @@ const numOfBars = window.screen.availWidth < 1000 ? 20 : 40;
 const DEFAULT_COLOR = "turquoise";
 const SORTING_COLOR = "red";
 var TIMEOUT = 0;
-var TIME_OUT_INTERVAL = 50;
+var TIME_OUT_INTERVAL = 20;
 
 const WhiteTextTypography = withStyles({
   root: {
@@ -33,6 +34,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       array: [],
+      algorithmOnGoing: false,
     }
     this.init();
   }
@@ -68,14 +70,23 @@ export default class App extends React.Component {
     })
   }
   visualiseMergeSort() {
+    if(this.state.algorithmOnGoing) return;
+    this.state.algorithmOnGoing = true;
+    document.getElementById("visualiseButton").style.pointerEvents = "none";
+    document.getElementById("dropdownId").style.pointerEvents = "none";
+    setTimeout(()=>{
+      document.getElementById("dropdownId").style.pointerEvents="auto"
+      document.getElementById("visualiseButton").style.backgroundColor="teal"
+    },100);
     const visited = mergeSort(this.state.array.slice());
     TIMEOUT = 0;
-    TIME_OUT_INTERVAL = 30;
+    TIME_OUT_INTERVAL = 20;
     for(let i=0;i<visited.length;i++) {
         this.markComparing(visited[i][0],visited[i][1]);
         this.markSwapping(visited[i][2],visited[i][3]);
         this.markReturnToDefault(visited[i][0],visited[i][1]);
     }
+    setTimeout(()=>document.getElementById("visualiseButton").style.backgroundColor=null,TIMEOUT);
   }
   markReturnToDefault(x,y) {
     setTimeout(()=> {
@@ -140,6 +151,22 @@ export default class App extends React.Component {
     },TIMEOUT);
     TIMEOUT += TIME_OUT_INTERVAL;
   }
+  markChange(x,y) {
+    const CHANGING_COLOR = "red";
+    setTimeout(()=> {
+      document.getElementById(x).style.backgroundColor = CHANGING_COLOR;
+      document.getElementById(y).style.backgroundColor = CHANGING_COLOR;
+    },TIMEOUT);
+    TIMEOUT += TIME_OUT_INTERVAL;
+    setTimeout(()=> {
+      document.getElementById(x).style.height =  document.getElementById(y).style.height;
+    },TIMEOUT);
+    setTimeout(()=> {
+      document.getElementById(x).style.backgroundColor = DEFAULT_COLOR;
+      document.getElementById(y).style.backgroundColor = DEFAULT_COLOR;
+    },TIMEOUT);
+    TIMEOUT += TIME_OUT_INTERVAL;
+  }
   markSorted(idx) {
      const SORTED_COLOR = "teal";
      setTimeout(()=> {
@@ -153,8 +180,14 @@ export default class App extends React.Component {
     TIMEOUT += TIME_OUT_INTERVAL;
   }
   visualiseQuickSort() {
+    if(this.state.algorithmOnGoing) return;
+    this.state.algorithmOnGoing = true;
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
+    setTimeout(()=>{
+      document.getElementById("dropdownId").style.pointerEvents="auto"
+      document.getElementById("visualiseButton").style.backgroundColor="teal"
+    },100);
     TIMEOUT = 0;
     TIME_OUT_INTERVAL = 20;
     const animations = quickSort(this.state.array.slice());
@@ -173,7 +206,9 @@ export default class App extends React.Component {
       else {
          this.markSorted(arr[1]);
       }
+      setTimeout(()=>document.getElementById("visualiseButton").style.backgroundColor=null,TIMEOUT);
     }
+    setTimeout(()=>document.getElementById("visualiseButton").style.backgroundColor=null,TIMEOUT);
   }
   markVisit(x,y) {
     setTimeout(()=>{
@@ -203,10 +238,16 @@ export default class App extends React.Component {
     },TIMEOUT);
   }
   visualiseBubbleSort() {
+    if(this.state.algorithmOnGoing) return;
+    this.state.algorithmOnGoing = true;
     TIMEOUT = 0;
     TIME_OUT_INTERVAL = 20;
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
+    setTimeout(()=>{
+      document.getElementById("dropdownId").style.pointerEvents="auto"
+      document.getElementById("visualiseButton").style.backgroundColor="teal"
+    },100);
     const animations = bubbleSort(this.state.array.slice());
     for(let i=0;i<animations.length;i++) {
       const arr = animations[i];
@@ -221,10 +262,17 @@ export default class App extends React.Component {
         this.markSorted(arr[1]);
       }
     }
+    setTimeout(()=>document.getElementById("visualiseButton").style.backgroundColor=null,TIMEOUT);
   }
   visualiseCombSort() {
+    if(this.state.algorithmOnGoing) return;
+    this.state.algorithmOnGoing = true;
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
+    setTimeout(()=>{
+      document.getElementById("dropdownId").style.pointerEvents="auto"
+      document.getElementById("visualiseButton").style.backgroundColor="teal"
+    },100);
     TIMEOUT = 0;
     TIME_OUT_INTERVAL = 20;
     const animations = combSort(this.state.array.slice());
@@ -239,12 +287,19 @@ export default class App extends React.Component {
          this.markSwap(idx1,idx2);
       }
     }
+    setTimeout(()=>document.getElementById("visualiseButton").style.backgroundColor=null,TIMEOUT);
   }
   visualiseInsertionSort() {
+    if(this.state.algorithmOnGoing) return;
+    this.state.algorithmOnGoing = true;
     TIMEOUT = 0;
     TIME_OUT_INTERVAL = 20;
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
+    setTimeout(()=>{
+      document.getElementById("dropdownId").style.pointerEvents="auto"
+      document.getElementById("visualiseButton").style.backgroundColor="teal"
+    },100);
     const animations = insertionSort(this.state.array.slice());
     for(let i=0;i<animations.length;i++) {
       const arr = animations[i];
@@ -256,6 +311,7 @@ export default class App extends React.Component {
         this.markSwap(arr[1],arr[2]);
       }
     }
+    setTimeout(()=>document.getElementById("visualiseButton").style.backgroundColor=null,TIMEOUT);
   }
   markSmallest(x,y) {
     setTimeout(() => {
@@ -264,11 +320,36 @@ export default class App extends React.Component {
     },TIMEOUT);
     TIMEOUT += TIME_OUT_INTERVAL;
   }
-  visualiseSelectionSort() {
+  visualiseShellSort() {
+    if(this.state.algorithmOnGoing) return;
+    this.state.algorithmOnGoing = true;
     TIMEOUT = 0;
     TIME_OUT_INTERVAL = 20;
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
+    setTimeout(()=>{
+      document.getElementById("dropdownId").style.pointerEvents="auto"
+      document.getElementById("visualiseButton").style.backgroundColor="teal"
+    },100);
+    const animations = shellSort(this.state.array.slice());
+    for(let i=0;i<animations.length;i++) {
+       const operator = animations[i][0];
+       if(operator === "pivot") this.markPivot(animations[i][1]);
+       else this.markChange(animations[i][1],animations[i][2]);
+    }
+    setTimeout(()=>document.getElementById("visualiseButton").style.backgroundColor=null,TIMEOUT);
+  }
+  visualiseSelectionSort() {
+    if(this.state.algorithmOnGoing) return;
+    this.state.algorithmOnGoing = true;
+    TIMEOUT = 0;
+    TIME_OUT_INTERVAL = 20;
+    document.getElementById("visualiseButton").style.pointerEvents = "none";
+    document.getElementById("dropdownId").style.pointerEvents = "none";
+    setTimeout(()=>{
+      document.getElementById("dropdownId").style.pointerEvents="auto"
+      document.getElementById("visualiseButton").style.backgroundColor="teal"
+    },100);
     const animations = selectionSort(this.state.array.slice());
     for(let i=0;i<animations.length;i++) {
       const arr = animations[i];
@@ -289,6 +370,7 @@ export default class App extends React.Component {
         this.markSmallest(arr[1],arr[2]);
       }
     }
+    setTimeout(()=>document.getElementById("visualiseButton").style.backgroundColor=null,TIMEOUT);
   }
   animateButton(id) {
     document.getElementById(id).style.backgroundColor = "orange";
@@ -359,6 +441,13 @@ export default class App extends React.Component {
                   onClick={()=>this.visualiseQuickSort()} 
                   onMouseEnter={()=>this.animateButton("quickSortButton")}
                   onMouseLeave={()=>this.deAnimateButton("quickSortButton")}> Quick Sort </Button>
+              <Button 
+                  id="shellSortButton"
+                  size="large"
+                  style={{backgroundColor:"white",textTransform:"none"}}
+                  onClick={()=>this.visualiseQuickSort()} 
+                  onMouseEnter={()=>this.animateButton("shellSortButton")}
+                  onMouseLeave={()=>this.deAnimateButton("shellSortButton")}> Shell Sort </Button>
         </div>
           </div>
           <Button
