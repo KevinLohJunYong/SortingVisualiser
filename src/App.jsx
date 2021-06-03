@@ -71,7 +71,7 @@ export default class App extends React.Component {
   }
   visualiseMergeSort() {
     if(this.state.algorithmOnGoing) return;
-    this.state.algorithmOnGoing = true;
+    this.setState({algorithmOnGoing:false});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
@@ -181,7 +181,7 @@ export default class App extends React.Component {
   }
   visualiseQuickSort() {
     if(this.state.algorithmOnGoing) return;
-    this.state.algorithmOnGoing = true;
+    this.setState({algorithmOnGoing:false});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
@@ -239,7 +239,7 @@ export default class App extends React.Component {
   }
   visualiseBubbleSort() {
     if(this.state.algorithmOnGoing) return;
-    this.state.algorithmOnGoing = true;
+    this.setState({algorithmOnGoing:false});
     TIMEOUT = 0;
     TIME_OUT_INTERVAL = 20;
     document.getElementById("visualiseButton").style.pointerEvents = "none";
@@ -266,7 +266,7 @@ export default class App extends React.Component {
   }
   visualiseCombSort() {
     if(this.state.algorithmOnGoing) return;
-    this.state.algorithmOnGoing = true;
+    this.setState({algorithmOnGoing:false});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
@@ -291,7 +291,7 @@ export default class App extends React.Component {
   }
   visualiseInsertionSort() {
     if(this.state.algorithmOnGoing) return;
-    this.state.algorithmOnGoing = true;
+    this.setState({algorithmOnGoing:false});
     TIMEOUT = 0;
     TIME_OUT_INTERVAL = 20;
     document.getElementById("visualiseButton").style.pointerEvents = "none";
@@ -322,7 +322,7 @@ export default class App extends React.Component {
   }
   visualiseShellSort() {
     if(this.state.algorithmOnGoing) return;
-    this.state.algorithmOnGoing = true;
+    this.setState({algorithmOnGoing:false});
     TIMEOUT = 0;
     TIME_OUT_INTERVAL = 20;
     document.getElementById("visualiseButton").style.pointerEvents = "none";
@@ -341,7 +341,7 @@ export default class App extends React.Component {
   }
   visualiseSelectionSort() {
     if(this.state.algorithmOnGoing) return;
-    this.state.algorithmOnGoing = true;
+    this.setState({algorithmOnGoing:false});
     TIMEOUT = 0;
     TIME_OUT_INTERVAL = 20;
     document.getElementById("visualiseButton").style.pointerEvents = "none";
