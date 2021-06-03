@@ -9,6 +9,7 @@ import quickSort from './Algorithms/QuickSort.js';
 import bubbleSort from './Algorithms/BubbleSort.js';
 import insertionSort from './Algorithms/InsertionSort.js';
 import selectionSort from './Algorithms/SelectionSort.js';
+import combSort from './Algorithms/CombSort.js';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -217,6 +218,22 @@ export default class App extends React.Component {
       }
     }
   }
+  visualiseCombSort() {
+    TIMEOUT = 0;
+    TIME_OUT_INTERVAL = 20;
+    const animations = combSort(this.state.array.slice());
+    for(let i=0;i<animations.length;i++) {
+      let idx1 = animations[i][1];
+      let idx2 = animations[i][2];
+      let operator = animations[i][0];
+      if(operator === "visit") {
+          this.markVisit(idx1,idx2);
+      }
+      else {
+         this.markSwap(idx1,idx2);
+      }
+    }
+  }
   visualiseInsertionSort() {
     const animations = insertionSort(this.state.array.slice());
     for(let i=0;i<animations.length;i++) {
@@ -268,7 +285,7 @@ export default class App extends React.Component {
    render() {
      return (
        <div style={{textAlign:"center"}}>
-      <AppBar position="static" elevation={0} style={{padding:"10px",paddingLeft:"5px"}}>
+      <AppBar position="static" elevation={0} style={{padding:"5px",paddingLeft:"5px"}}>
       <Toolbar>
         <Typography variant="h6" color="inherit">
             SortingVisualiser
@@ -293,6 +310,13 @@ export default class App extends React.Component {
                    onClick={()=>this.visualiseBubbleSort()}
                    onMouseEnter={()=>this.animateButton("bubbleSortButton")}
                    onMouseLeave={()=>this.deAnimateButton("bubbleSortButton")}> Bubble Sort </Button>
+             <Button 
+                  id="combSortButton"
+                  size="large"
+                  style={{backgroundColor:"white",textTransform:"none"}}
+                  onClick={()=>this.visualiseCombSort()} 
+                  onMouseEnter={()=>this.animateButton("combSortButton")}
+                  onMouseLeave={()=>this.deAnimateButton("combSortButton")}> Comb Sort </Button>
            <Button 
                    id="insertionSortButton"
                    style={{backgroundColor:"white",textTransform:"none"}}

@@ -20,7 +20,11 @@ export default class Bar extends React.Component {
          return (
             <div 
               id={index}
-              style={{height:`${this.adjustHeight(height)}px`,width:widthAdjusted,backgroundColor:this.getBgColor(isBeingSorted),display:"inline-block",margin:"1px",marginTop:"7%"}}>
+              style={{height:`${this.adjustHeight(height)}px`,
+              width:widthAdjusted,backgroundColor:this.getBgColor(isBeingSorted),
+              display:"inline-block",
+              margin:"1px",
+              marginTop:"4%"}}>
             </div>
          );
      };
