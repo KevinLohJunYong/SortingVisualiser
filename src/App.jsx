@@ -9,7 +9,6 @@ import quickSort from './Algorithms/QuickSort.js';
 import bubbleSort from './Algorithms/BubbleSort.js';
 import insertionSort from './Algorithms/InsertionSort.js';
 import selectionSort from './Algorithms/SelectionSort.js';
-import shellSort from './Algorithms/ShellSort.js';
 import combSort from './Algorithms/CombSort.js';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,7 +20,7 @@ const numOfBars = window.screen.availWidth < 1000 ? 20 : 40;
 const DEFAULT_COLOR = "turquoise";
 const SORTING_COLOR = "red";
 var TIMEOUT = 0;
-var TIME_OUT_INTERVAL = window.screen.availWidth < 1000 ? 35 : 20;;
+var TIME_OUT_INTERVAL = window.screen.availWidth < 1000 ? 35 : 20;
 
 const WhiteTextTypography = withStyles({
   root: {
@@ -34,7 +33,6 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       array: [],
-      algorithmOnGoing: false,
     }
     this.init();
   }
@@ -70,8 +68,6 @@ export default class App extends React.Component {
     })
   }
   visualiseMergeSort() {
-    if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:true});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
@@ -85,6 +81,12 @@ export default class App extends React.Component {
         this.markReturnToDefault(visited[i][0],visited[i][1]);
     }
     setTimeout(()=>document.getElementById("visualiseButton").style.backgroundColor=null,TIMEOUT);
+  }
+  isSorted(arr) {
+    for(let i=1;i<arr.length;i++) {
+          if(arr[i].height < arr[i-1].height) return false;
+    }
+    return true;
   }
   markReturnToDefault(x,y) {
     setTimeout(()=> {
@@ -149,22 +151,6 @@ export default class App extends React.Component {
     },TIMEOUT);
     TIMEOUT += TIME_OUT_INTERVAL;
   }
-  markChange(x,y) {
-    const CHANGING_COLOR = "red";
-    setTimeout(()=> {
-      document.getElementById(x).style.backgroundColor = CHANGING_COLOR;
-      document.getElementById(y).style.backgroundColor = CHANGING_COLOR;
-    },TIMEOUT);
-    TIMEOUT += TIME_OUT_INTERVAL;
-    setTimeout(()=> {
-      document.getElementById(x).style.height =  document.getElementById(y).style.height;
-    },TIMEOUT);
-    setTimeout(()=> {
-      document.getElementById(x).style.backgroundColor = DEFAULT_COLOR;
-      document.getElementById(y).style.backgroundColor = DEFAULT_COLOR;
-    },TIMEOUT);
-    TIMEOUT += TIME_OUT_INTERVAL;
-  }
   markSorted(idx) {
      const SORTED_COLOR = "teal";
      setTimeout(()=> {
@@ -178,8 +164,6 @@ export default class App extends React.Component {
     TIMEOUT += TIME_OUT_INTERVAL;
   }
   visualiseQuickSort() {
-    if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:true});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
@@ -234,8 +218,6 @@ export default class App extends React.Component {
     },TIMEOUT);
   }
   visualiseBubbleSort() {
-    if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:true});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
@@ -259,8 +241,6 @@ export default class App extends React.Component {
     setTimeout(()=>document.getElementById("visualiseButton").style.backgroundColor=null,TIMEOUT);
   }
   visualiseCombSort() {
-    if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:true});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
@@ -282,8 +262,6 @@ export default class App extends React.Component {
     setTimeout(()=>document.getElementById("visualiseButton").style.backgroundColor=null,TIMEOUT);
   }
   visualiseInsertionSort() {
-    if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:true});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
@@ -310,26 +288,8 @@ export default class App extends React.Component {
     },TIMEOUT);
     TIMEOUT += TIME_OUT_INTERVAL;
   }
-  visualiseShellSort() {
-    if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:true});
-    document.getElementById("visualiseButton").style.pointerEvents = "none";
-    document.getElementById("dropdownId").style.pointerEvents = "none";
-    setTimeout(()=>{
-      document.getElementById("dropdownId").style.pointerEvents="auto"
-      document.getElementById("visualiseButton").style.backgroundColor="teal"
-    },100);
-    const animations = shellSort(this.state.array.slice());
-    for(let i=0;i<animations.length;i++) {
-       const operator = animations[i][0];
-       if(operator === "pivot") this.markPivot(animations[i][1]);
-       else this.markChange(animations[i][1],animations[i][2]);
-    }
-    setTimeout(()=>document.getElementById("visualiseButton").style.backgroundColor=null,TIMEOUT);
-  }
+
   visualiseSelectionSort() {
-    if(this.state.algorithmOnGoing) return;
-    this.setState({algorithmOnGoing:true});
     document.getElementById("visualiseButton").style.pointerEvents = "none";
     document.getElementById("dropdownId").style.pointerEvents = "none";
     setTimeout(()=>{
@@ -427,13 +387,6 @@ export default class App extends React.Component {
                   onClick={()=>this.visualiseQuickSort()} 
                   onMouseEnter={()=>this.animateButton("quickSortButton")}
                   onMouseLeave={()=>this.deAnimateButton("quickSortButton")}> Quick Sort </Button>
-              <Button 
-                  id="shellSortButton"
-                  size="large"
-                  style={{backgroundColor:"white",textTransform:"none"}}
-                  onClick={()=>this.visualiseQuickSort()} 
-                  onMouseEnter={()=>this.animateButton("shellSortButton")}
-                  onMouseLeave={()=>this.deAnimateButton("shellSortButton")}> Shell Sort </Button>
         </div>
           </div>
           <Button
